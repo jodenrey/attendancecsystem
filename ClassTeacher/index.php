@@ -3,7 +3,7 @@ include '../Includes/dbcon.php';
 include '../Includes/session.php';
 
 
-    $query = "SELECT tblclass.className, tblclassarms.classArmName 
+    $query = "SELECT tblclass.Id as classId, tblclassarms.Id as classArmId, tblclass.className, tblclassarms.classArmName 
     FROM tblclassteacher
     INNER JOIN tblclassarms ON tblclassarms.teacherId = tblclassteacher.Id
     INNER JOIN tblclass ON tblclass.Id = tblclassarms.classId
@@ -20,6 +20,10 @@ include '../Includes/session.php';
     } else {
         $className = $rrw['className'];
         $classArmName = $rrw['classArmName'];
+        
+        // Update session variables with class and classArm IDs
+        $_SESSION['classId'] = $rrw['classId'];
+        $_SESSION['classArmId'] = $rrw['classArmId'];
     }
 
 

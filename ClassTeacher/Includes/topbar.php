@@ -8,7 +8,7 @@ if (session_status() == PHP_SESSION_NONE) {
 include($_SERVER['DOCUMENT_ROOT'] . '/hamby/includes/dbcon.php');
 
 // Default full name placeholder
-$fullName = "Teacher";
+$fullName = "";
 
 // Ensure user is logged in
 if (!empty($_SESSION['userType']) && !empty($_SESSION['userId'])) {

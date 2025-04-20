@@ -128,11 +128,10 @@ $query = "SELECT tblclass.className,tblclassarms.classArmName
                     </thead>
                     <tbody id="studentsTableBody">
                       <?php
-                      $query = "SELECT s.*, c.className, ca.classArmName, st.sessionName 
+                      $query = "SELECT s.*, c.className, ca.classArmName 
                                FROM tblstudents s
                                INNER JOIN tblclass c ON c.Id = s.classId
                                INNER JOIN tblclassarms ca ON ca.Id = s.classArmId
-                               INNER JOIN tblsessionterm st ON st.Id = s.sessionTermId
                                WHERE s.classId = '$_SESSION[classId]' AND s.classArmId = '$_SESSION[classArmId]'
                                ORDER BY s.firstName ASC";
                       $rs = $conn->query($query);
@@ -149,11 +148,21 @@ $query = "SELECT tblclass.className,tblclassarms.classArmName
                             <td>".$rows['admissionNumber']."</td>
                             <td>".$rows['className']."</td>
                             <td>".$rows['classArmName']."</td>
-                            <td>".$rows['sessionName']."</td>
+                            <td>".getCurrentSessionName($conn)."</td>
                           </tr>";
                         }
                       } else {
                         echo "<tr><td colspan='8' class='text-center'>No Record Found!</td></tr>";
+                      }
+                      
+                      // Helper function to get current session name
+                      function getCurrentSessionName($conn) {
+                        $query = "SELECT sessionName FROM tblsessionterm WHERE isActive = '1' LIMIT 1";
+                        $result = $conn->query($query);
+                        if ($result && $row = $result->fetch_assoc()) {
+                            return $row['sessionName'];
+                        }
+                        return "N/A";
                       }
                       ?>
                     </tbody>
