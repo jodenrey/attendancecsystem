@@ -3,10 +3,34 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 $userType = isset($_SESSION['userType']) ? $_SESSION['userType'] : '';
+$using_default_password = isset($_SESSION['default_password']) && $_SESSION['default_password'] === true;
 ?>
 
+<?php if ($using_default_password): ?>
+<!-- Default Password Warning Banner -->
+<div class="alert alert-danger text-center" style="margin-bottom: 0; border-radius: 0;">
+  <strong>WARNING:</strong> You must change your default password before continuing.
+</div>
+<?php endif; ?>
 
 <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+<?php if ($using_default_password): ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // This function runs when the page has loaded
+  // Disable all navigation links except Change Password
+  document.querySelectorAll('#accordionSidebar a.nav-link:not([href="changePassword.php"])').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      alert('Please change your default password before accessing other features.');
+      window.location.href = 'changePassword.php';
+    });
+    link.classList.add('text-muted');
+    link.style.cursor = 'not-allowed';
+  });
+});
+</script>
+<?php endif; ?>
   <a class="sidebar-brand d-flex align-items-center bg-info justify-content-center" href="index.php">
     <div class="sidebar-brand-text mx-3">DailyMark</div>
   </a>

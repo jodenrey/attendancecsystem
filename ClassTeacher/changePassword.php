@@ -56,8 +56,11 @@ if (isset($_POST['changePassword'])) {
             
             $updateQuery = mysqli_query($conn, "UPDATE $table SET password='$newPassword' WHERE $idField='$idValue'");
         }
-        
-        if ($updateQuery) {
+          if ($updateQuery) {
+            // Remove the default password flag from the session
+            if(isset($_SESSION['default_password'])) {
+                unset($_SESSION['default_password']);
+            }
             $statusMsg = "<div class='alert alert-success'>Password changed successfully!</div>";
         } else {
             $statusMsg = "<div class='alert alert-danger'>An error occurred: " . mysqli_error($conn) . "</div>";

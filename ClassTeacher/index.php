@@ -1,6 +1,7 @@
 <?php 
 include '../Includes/dbcon.php';
 include '../Includes/session.php';
+include '../Includes/check_default_password.php';
 
 
     $query = "SELECT tblclass.Id as classId, tblclassarms.Id as classArmId, tblclass.className, tblclassarms.classArmName 

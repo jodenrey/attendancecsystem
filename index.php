@@ -51,6 +51,13 @@ session_start();
         $_SESSION['emailAddress'] = $rows['emailAddress'];
         $_SESSION['classId'] = $rows['classId'];
         $_SESSION['classArmId'] = $rows['classArmId'];
+        $_SESSION['userType'] = 'Teacher';
+        
+        // Check if using default password (pass123)
+        $defaultPass = md5("pass123");
+        if($rows['password'] == $defaultPass){
+          $_SESSION['default_password'] = true;
+        }
 
         echo "<script type = \"text/javascript\">
         window.location = (\"ClassTeacher/index.php\")
@@ -108,6 +115,11 @@ session_start();
         $_SESSION['classId'] = $rows['classId'];
         $_SESSION['classArmId'] = $rows['classArmId'];
         $_SESSION['userType'] = $userType;
+        
+        // Check if using default password (12345)
+        if($rows['password'] == '12345'){
+          $_SESSION['default_password'] = true;
+        }
 
         echo "<script type = \"text/javascript\">
         window.location = (\"ClassTeacher/student.php\")

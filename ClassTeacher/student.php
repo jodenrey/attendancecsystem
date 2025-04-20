@@ -2,6 +2,7 @@
 <?php 
 include '../Includes/dbcon.php';
 include '../Includes/session.php';
+include '../Includes/check_default_password.php';
 
 ?>
 
